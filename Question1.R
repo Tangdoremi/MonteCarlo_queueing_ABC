@@ -2,11 +2,11 @@ rm(list = ls())
 library(ggplot2)
 
 #les notations:
-#t_interval: les √©tudiants arrivent √† la cantine selon un processus de Poisson de param√®tre 1, i.e. l'intervalle du temps o√π deux √©tudiants arrivent suit une loi exponentielle de param√®tre 1
+#t_interval: les ®¶tudiants arrivent ®§ la cantine selon un processus de Poisson de param®§tre 1, i.e. l'intervalle du temps o®¥ deux ®¶tudiants arrivent suit une loi exponentielle de param®§tre 1
 
-#t_arrival: les temps o√π les √©tudiants arrivent
+#t_arrival: les temps o®¥ les ®¶tudiants arrivent
 
-#t_servi: suit une loi exponentielle de moyenne 0.75, i.e. la loi exponentielle de param√®tre 4/3
+#t_servi: suit une loi exponentielle de moyenne 0.75, i.e. la loi exponentielle de param®§tre 4/3
 
 #### caculate waiting time for each student and simulate ####
 
@@ -44,6 +44,8 @@ N = numeric(nSim)
    
 
 #### encadrer l'erreur pour constuire l'intervalle de confiance (ici au niveau 5%) ####
+  
+  E_N = mean(N) 
   e = qnorm(0.975)*sqrt(var(N))/sqrt(nSim) 
 
 

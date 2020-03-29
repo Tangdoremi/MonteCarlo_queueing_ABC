@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1585411912863.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1959563368",
+    "id" : "89F4FD5F",
+    "lastKnownWriteTime" : 1585399418,
+    "last_content_update" : 1585399418,
+    "path" : "C:/Users/dell/Desktop/MonteCarlo模拟/Acceptance-rejection.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "30,27",
+        "scrollLine" : "28"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

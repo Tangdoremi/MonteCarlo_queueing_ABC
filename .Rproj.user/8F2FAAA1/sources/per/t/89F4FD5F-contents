@@ -1,0 +1,57 @@
+#Ex2 Algorithme acceptation-rejet (accept-reject)
+
+simuLaplace<-function(nSim){ #Methode de la fdr inverse cf https://fr.wikipedia.org/wiki/Loi_de_Laplace_(probabilit%C3%A9s) pour la formule de la fdr
+  u<-runif(nSim)
+  return(-sign(u-0.5)*log(1-2*abs(u-0.5)))
+}
+
+simuNormal<-function(nSim) { #algo de type accept-reject
+  numIter=0
+  numAccept=0
+  out=numeric(nSim)
+  while (numAccept<nSim) {  
+    numIter=numIter+1
+    u=runif(1)
+    y=simuLaplace(1)
+    if(u<=exp(-0.5*(abs(y)-1)^2)){
+      out[numAccept+1]=y
+      numAccept=numAccept+1
+    }
+  }
+  return(list(simu=out,numAccept=numAccept,numIter=numIter))
+}
+
+
+library(ggplot2)
+
+set.seed(5)
+nSim=2000
+simulation=simuNormal(nSim)
+ggplot(data=as.data.frame(simulation))+
+  geom_histogram(aes(x=simu,y=..density..,colour='Simulation'),fill='deepskyblue4')+
+  geom_line(aes(x=seq(-5,5,length.out = nSim),y=dnorm(seq(-5,5,length.out = nSim)),colour='True density'))+
+  xlab('')+
+  scale_colour_manual(name = 'Legend', 
+                      guide = 'legend',
+                      values = c('Simulation' = 'deepskyblue4',
+                                 'True density' = 'orange'), 
+                      labels = c('Simulation',
+                                 'True density'))
+
+#test un peu plus formel de la normalite de notre simulation : Q-Q plot
+ggplot(as.data.frame(simulation),aes(sample=simu))+
+  stat_qq() + stat_qq_line()
+#Taux d'acceptation
+
+tauxAcceptation=numeric(1000)
+for (i in (1:1000)) {
+  out=simuNormal(nSim)
+  tauxAcceptation[i]=out$numAccept/out$numIter
+}
+ggplot(data=as.data.frame(tauxAcceptation))+
+  geom_boxplot(aes(y=tauxAcceptation,color='Taux acceptation'))+
+  geom_hline(aes(yintercept=1/sqrt(2*exp(1)/pi), color='1/M'))+
+  scale_colour_manual(name = 'Legend', 
+                      guide = 'legend',
+                      values = c('Taux acceptation' = 'deepskyblue4',
+                                 '1/M' = 'orange'))

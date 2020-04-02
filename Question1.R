@@ -1,14 +1,17 @@
 rm(list = ls())
 library(ggplot2)
 
+
+#### Question 1 ####
+
 #les notations:
-#t_interval: les ®¶tudiants arrivent ®§ la cantine selon un processus de Poisson de param®§tre 1, i.e. l'intervalle du temps o®¥ deux ®¶tudiants arrivent suit une loi exponentielle de param®§tre 1
+#t_interval: les √©tudiants arrivent √† la cantine selon un processus de Poisson de param√®tre 1, i.e. l'intervalle du temps o√π deux √©tudiants arrivent suit une loi exponentielle de param√®tre 1
 
-#t_arrival: les temps o®¥ les ®¶tudiants arrivent
+#t_arrival: les temps o√π les √©tudiants arrivent
 
-#t_servi: suit une loi exponentielle de moyenne 0.75, i.e. la loi exponentielle de param®§tre 4/3
+#t_servi: suit une loi exponentielle de moyenne 0.75, i.e. la loi exponentielle de param√®tre 4/3
 
-#### caculate waiting time for each student and simulate ####
+# caculate waiting time for each student and simulate
 
 set.seed(1)
 
@@ -43,20 +46,33 @@ N = numeric(nSim)
   }
    
 
-#### encadrer l'erreur pour constuire l'intervalle de confiance (ici au niveau 5%) ####
-  
-  E_N = mean(N) 
+# encadrer l'erreur pour constuire l'intervalle de confiance (ici au niveau 5%) 
+  E_N = mean(N)
   e = qnorm(0.975)*sqrt(var(N))/sqrt(nSim) 
 
 
-#### la loi de N approximativement ####
+# la loi de N approximativement
 ggplot(data=as.data.frame(N))+
   geom_histogram(aes(x=N, y=..density..),fill='deepskyblue4')
 
 
+#### Question 3 ####
 
+# we imagine that t_interval_obs are our observation values of t_interval of students
+t_interval_obs <- rexp(199)
 
+# we assume the prior distribution of unknown parameter is a uniform distribution, and we set the interval of this distribution
+a <- seq(0, 5, length.out = 1000)
+f_post = numeric()
 
+for (i in (1:1000) ){
+      theta = a[i]
+      #use bayesian formule to calculate the posterior probability density
+      f_post[i] = theta^199*exp(-theta*(sum(t_interval_obs)))} 
+ 
+# find out at which parameter, the posterior proba density is the highest.
+plot(a, f_post)
+print(a[which.max(f_post)])
 
 
 
